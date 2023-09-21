@@ -105,7 +105,7 @@ class Profile extends StatelessWidget {
                 Row(
                   children: [
                     Text(user.khachhangs![0].diem.toString()),
-                    const Text(" điểm: "),
+                    const Text(" điểm"),
                   ],
                 )
               ],

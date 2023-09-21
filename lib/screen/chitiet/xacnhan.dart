@@ -3,9 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../modal/phong_modal.dart';
 import '../../modal/user_modal.dart';
+import '../../service/phong_service.dart';
 import '../../service/user_service.dart';
 import '../profile/profile.dart';
+import '../stripe.dart';
 import 'thongtin_user.dart';
 
 class Xacnhan extends StatefulWidget {
@@ -31,6 +34,7 @@ class _XacnhanState extends State<Xacnhan> {
 
   late int userid;
   late Future<Users> futureUsers;
+  late Future<Phongs> futurePhongs;
   //text editing controller for text field
 
   Future<Users> setValue() async {
@@ -65,6 +69,7 @@ class _XacnhanState extends State<Xacnhan> {
     userid = 0;
 
     futureUsers = getUserById(userid);
+    futurePhongs = fetchPhongWithSoPhong(widget.soPhong);
 
     super.initState();
   }
@@ -272,25 +277,52 @@ class _XacnhanState extends State<Xacnhan> {
                       const SizedBox(
                         height: 10,
                       ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Expanded(
+                      //       child: ElevatedButton(
+                      //         style: ElevatedButton.styleFrom(
+                      //             shape: RoundedRectangleBorder(
+                      //                 borderRadius: BorderRadius.circular(10)),
+                      //             padding: const EdgeInsets.symmetric(
+                      //                 horizontal: 40, vertical: 15)),
+                      //         onPressed: () {
+                      //           Navigator.push(
+                      //             context,
+                      //             MaterialPageRoute(
+                      //                 builder: (context) =>
+                      //                     StripePaymentScreen()),
+                      //           );
+                      //         },
+                      //         child: const Text(
+                      //           "Đặt phòng",
+                      //           style: TextStyle(
+                      //             fontSize: 20,
+                      //             fontWeight: FontWeight.bold,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 40, vertical: 15)),
-                              onPressed: () {},
-                              child: const Text(
-                                "Đặt phòng",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
+                          FutureBuilder<Phongs>(
+                            future: futurePhongs,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return StripePaymentScreen(
+                                  giatien: snapshot.data!.loaiphongs!.gia!,
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text('${snapshot.error}');
+                              }
+
+                              // By default, show a loading spinner.
+                              return const CircularProgressIndicator();
+                            },
                           ),
                         ],
                       ),
