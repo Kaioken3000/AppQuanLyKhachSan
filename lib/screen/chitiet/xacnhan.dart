@@ -33,6 +33,7 @@ class _XacnhanState extends State<Xacnhan> {
   TextEditingController soluong = TextEditingController();
 
   late int userid;
+  late Users user;
   late Future<Users> futureUsers;
   late Future<Phongs> futurePhongs;
   //text editing controller for text field
@@ -67,6 +68,7 @@ class _XacnhanState extends State<Xacnhan> {
     soluong.text = "0"; //set the initial value of text field
 
     userid = 0;
+    user = Users();
 
     futureUsers = getUserById(userid);
     futurePhongs = fetchPhongWithSoPhong(widget.soPhong);
@@ -124,6 +126,7 @@ class _XacnhanState extends State<Xacnhan> {
                         future: setValue(),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
+                            user = snapshot.data!;
                             return ThongtinUser(user: snapshot.data!);
                           } else if (snapshot.hasError) {
                             return Text('${snapshot.error}');
@@ -315,6 +318,11 @@ class _XacnhanState extends State<Xacnhan> {
                               if (snapshot.hasData) {
                                 return StripePaymentScreen(
                                   giatien: snapshot.data!.loaiphongs!.gia!,
+                                  ngaydat: ngayvao.text,
+                                  ngaytra: ngayra.text,
+                                  phongid: soPhong.text,
+                                  soluong: soluong.text,
+                                  user: user, 
                                 );
                               } else if (snapshot.hasError) {
                                 return Text('${snapshot.error}');

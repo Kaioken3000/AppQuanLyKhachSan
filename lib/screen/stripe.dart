@@ -5,17 +5,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart' as stripe;
 import 'package:http/http.dart' as http;
 
+import '../modal/user_modal.dart';
+import '../service/datphong_service.dart';
+import 'myhome.dart';
+
 class StripePaymentScreen extends StatefulWidget {
-  const StripePaymentScreen({Key? key, required this.giatien})
+  const StripePaymentScreen(
+      {Key? key,
+      required this.giatien,
+      required this.ngaydat,
+      required this.ngaytra,
+      required this.soluong,
+      required this.phongid,
+      required this.user})
       : super(key: key);
 
+  final String ngaydat;
+  final String ngaytra;
+  final String soluong;
+  final String phongid;
   final int giatien;
+  final Users user;
+
   @override
   State<StripePaymentScreen> createState() => _StripePaymentScreenState();
 }
 
 class _StripePaymentScreenState extends State<StripePaymentScreen> {
   Map<String, dynamic>? paymentIntent;
+  final DatphongService datphongService = DatphongService();
 
   @override
   void initState() {
@@ -34,7 +52,6 @@ class _StripePaymentScreenState extends State<StripePaymentScreen> {
 
   Future<void> initPaymentSheet() async {
     try {
-      print(paymentIntent);
       await createPaymentIntent(widget.giatien);
       await stripe.Stripe.instance.initPaymentSheet(
         paymentSheetParameters: stripe.SetupPaymentSheetParameters(
@@ -78,13 +95,27 @@ class _StripePaymentScreenState extends State<StripePaymentScreen> {
     try {
       await stripe.Stripe.instance.presentPaymentSheet(
           options: const stripe.PaymentSheetPresentOptions(timeout: 1200000));
-
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(
-      //     content: Text('Payment successfully completed'),
-      //   ),
-      // );
-      
+      dynamic message = datphongService.thanhtoan(
+        widget.ngaydat,
+        widget.ngaytra,
+        int.parse(widget.soluong),
+        int.parse(widget.phongid),
+        widget.giatien,
+        paymentIntent!['id'],
+        widget.user,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Đặt phòng thành công'),
+        ),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MyHome(
+                  userid: widget.user.id!,
+                )),
+      );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

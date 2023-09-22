@@ -31,7 +31,6 @@ class _LoginScreenState extends State<LoginScreen> {
         emailController.text,
         passwordController.text,
       );
-      print(res);
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       if (res["Message"] == 200) {
         // Lưu userid
