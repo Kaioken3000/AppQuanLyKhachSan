@@ -12,11 +12,17 @@ class ApiClient {
   Future<dynamic> registerUser(Map<String, dynamic>? data) async {
     try {
       Response response = await _dio.post(
-          'https://api.loginradius.com/identity/v2/auth/register',
-          data: data,
+          'https://glorious-basically-molly.ngrok-free.app/mobile/client/register',
+          data: {
+            'email': data!['email'],
+            'username': data['username'],
+            'sdt': data['sdt'],
+            'password': data['password'],
+          },
+          options: Options(headers: {'ngrok-skip-browser-warning': '1'})
           // queryParameters: {'apikey': ApiSecret.apiKey},
-          options: Options(headers: {'ngrok-skip-browser-warning': '1'}));
-      return response.data;
+          );
+      return {"Message": response.statusCode, "user": response.data};
     } on DioException catch (e) {
       return e.response!.data;
     }

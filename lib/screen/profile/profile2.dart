@@ -23,7 +23,7 @@ class ProfilePage1 extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "Richie Lorie",
+                    user.username ?? '',
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge

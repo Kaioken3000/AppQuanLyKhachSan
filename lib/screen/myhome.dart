@@ -25,7 +25,6 @@ class _MyHomeState extends State<MyHome> {
       _selectedIndex = index;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[

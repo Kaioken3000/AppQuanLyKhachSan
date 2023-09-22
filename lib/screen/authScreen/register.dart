@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/api_client.dart';
 import '../../utils/validators.dart';
+import '../myhome.dart';
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -15,6 +17,8 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController sdtController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final ApiClient _apiClient = ApiClient();
   bool _showPassword = false;
@@ -27,31 +31,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ));
 
       Map<String, dynamic> userData = {
-        "Email": [
-          {
-            "Type": "Primary",
-            "Value": emailController.text,
-          }
-        ],
-        "Password": passwordController.text,
-        "About": 'I am a new user :smile:',
-        "FirstName": "Test",
-        "LastName": "Account",
-        "FullName": "Test Account",
-        "BirthDate": "10-12-1985",
-        "Gender": "M",
+        'email': emailController.text,
+        'username': usernameController.text,
+        'sdt': sdtController.text,
+        'password': passwordController.text,
       };
 
       dynamic res = await _apiClient.registerUser(userData);
 
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
-      if (res['ErrorCode'] == null) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()));
+      // if (res['ErrorCode'] == null) {
+      //   Navigator.push(context,
+      //       MaterialPageRoute(builder: (context) => const LoginScreen()));
+      // } else {
+      //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //     content: Text('Error: ${res['Message']}'),
+      //     backgroundColor: Colors.red.shade300,
+      //   ));
+      // }
+      if (res["Message"] == 200) {
+        WidgetsFlutterBinding.ensureInitialized();
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        pref.setInt("userid", res["user"]["id"]);
+
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MyHome(userid: res["user"]["id"])));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Error: ${res['Message']}'),
+          content: const Text('Error'),
           backgroundColor: Colors.red.shade300,
         ));
       }
@@ -84,7 +94,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     //   SizedBox(height: size.height * 0.08),
                     const Center(
                       child: Text(
-                        "Register",
+                        "Đăng ký",
                         style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
@@ -109,13 +119,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     SizedBox(height: size.height * 0.03),
                     TextFormField(
+                      controller: usernameController,
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        hintText: "Username",
+                        isDense: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: size.height * 0.03),
+                    TextFormField(
+                      controller: sdtController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        hintText: "Số điện thoại",
+                        isDense: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: size.height * 0.03),
+                    TextFormField(
                       obscureText: _showPassword,
                       validator: (value) =>
                           Validator.validatePassword(value ?? ""),
                       controller: passwordController,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
-                        hintText: "Password",
+                        hintText: "Mật khẩu",
                         suffixIcon: GestureDetector(
                           onTap: () {
                             setState(() {
@@ -147,7 +181,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 40, vertical: 15)),
                         child: const Text(
-                          "Register",
+                          "Đăng ký",
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -163,7 +197,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const LoginScreen())),
-                          child: const Text('Login')),
+                          child: const Text('Đăng nhập')),
                     )
                   ],
                 ),
