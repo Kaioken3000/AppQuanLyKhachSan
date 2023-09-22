@@ -32,14 +32,15 @@ import 'screen/stripe.dart';
 // }
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Stripe.publishableKey = "pk_test_51NshpwDMpQkkZbCd4VCAfhLtVImmpUReNoxYnw3boasEHpHVBGjyCpBYJPb0VYcABIomSDHzPKHJo0MOeeaosuLU00SIZLHuPH";
+  Stripe.publishableKey =
+      "pk_test_51NshpwDMpQkkZbCd4VCAfhLtVImmpUReNoxYnw3boasEHpHVBGjyCpBYJPb0VYcABIomSDHzPKHJo0MOeeaosuLU00SIZLHuPH";
   Stripe.merchantIdentifier = 'merchant.flutter.stripe.test';
   Stripe.urlScheme = 'flutterstripe';
   await Stripe.instance.applySettings();
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var userid = prefs.getInt("userid");
-  
+
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     home: userid == null ? const LoginScreen() : MyHome(userid: userid),

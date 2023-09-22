@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../modal/user_modal.dart';
 import '../../service/user_service.dart';
+import '../authScreen/login_screen.dart';
 import 'profile.dart';
+import 'profile2.dart';
 
 class ProfileHome extends StatelessWidget {
   const ProfileHome({super.key, required this.userid});
@@ -18,7 +21,9 @@ class ProfileHome extends StatelessWidget {
         title: appTitle,
         home: Scaffold(
           appBar: AppBar(
-            title: const Text("User"),
+            title: const Text("Profile"),
+            backgroundColor: Color(0xff006df1),
+            elevation: 0,
             leading: InkWell(
               onTap: () {
                 Navigator.pop(context);
@@ -28,18 +33,34 @@ class ProfileHome extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
+            actions: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.logout),
+                tooltip: 'User profile',
+                onPressed: () async {
+                  WidgetsFlutterBinding.ensureInitialized();
+                  SharedPreferences pref =
+                      await SharedPreferences.getInstance();
+                  pref.remove("userid");
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()));
+                },
+              ),
+            ],
           ),
           body: FutureBuilder<Users>(
             future: getUserById(userid),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Profile(user: snapshot.data!);
+                return ProfilePage1(user: snapshot.data!);
               } else if (snapshot.hasError) {
                 return Text('${snapshot.error}');
               }
 
               // By default, show a loading spinner.
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             },
           ),
         ));

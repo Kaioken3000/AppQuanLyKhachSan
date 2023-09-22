@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -170,12 +171,14 @@ class _SearchBarState extends State<SearchBar> {
                             borderRadius: BorderRadius.circular(10)),
                         padding: const EdgeInsets.symmetric(
                             horizontal: 40, vertical: 15)),
-                    child: const Text(
+                    child: Text(
                       "Tìm phòng trống",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: GoogleFonts.outfit(fontSize: 20,
+                        fontWeight: FontWeight.bold,),
+                    //   style: TextStyle(
+                    //     fontSize: 20,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
                     ),
                   ),
                 ),

@@ -39,7 +39,7 @@ class Profile extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
-                Icon(Icons.verified_user_sharp, size: 100),
+                Icon(Icons.person_rounded, size: 100),
               ],
             ),
             SizedBox(

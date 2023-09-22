@@ -7,6 +7,7 @@ import '../service/phong_service.dart';
 import '../service/user_service.dart';
 import 'phong_list.dart';
 import 'profile/profile.dart';
+import 'profile/profile_home.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key, required this.userid});
@@ -54,7 +55,7 @@ class _MyHomeState extends State<MyHome> {
           }
 
           // By default, show a loading spinner.
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     ];
@@ -66,12 +67,31 @@ class _MyHomeState extends State<MyHome> {
         theme: ThemeData(
           scaffoldBackgroundColor: const Color.fromARGB(255, 224, 224, 233),
           // appBarTheme: AppBarTheme(
-          //   color: const Color.fromARGB(255, 224, 224, 233),
+          //   color: Color(0xff006df1),
           // )
         ),
         home: Scaffold(
           appBar: AppBar(
             title: const Text(appTitle),
+            actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircleAvatar(
+                  child: IconButton(
+                    icon: const Icon(Icons.person_rounded),
+                    tooltip: 'User profile',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                ProfileHome(userid: widget.userid)),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
           body: Container(
             child: widgetOptions.elementAt(_selectedIndex),
@@ -83,7 +103,7 @@ class _MyHomeState extends State<MyHome> {
                 label: 'Trang chủ',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.verified_user_sharp),
+                icon: Icon(Icons.person_rounded),
                 label: 'Tài khoản',
               ),
             ],
