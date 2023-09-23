@@ -84,7 +84,10 @@ class _XacnhanState extends State<Xacnhan> {
         debugShowCheckedModeBanner: false,
         title: appTitle,
         theme: ThemeData(
-            scaffoldBackgroundColor: const Color.fromARGB(255, 224, 224, 233)),
+            scaffoldBackgroundColor: const Color.fromARGB(255, 224, 224, 233),
+            appBarTheme: const AppBarTheme(
+              color: Color(0xff006df1),
+            )),
         home: Scaffold(
             appBar: AppBar(
               title: const Text(appTitle),
@@ -322,7 +325,7 @@ class _XacnhanState extends State<Xacnhan> {
                                   ngaytra: ngayra.text,
                                   phongid: soPhong.text,
                                   soluong: soluong.text,
-                                  user: user, 
+                                  user: user,
                                 );
                               } else if (snapshot.hasError) {
                                 return Text('${snapshot.error}');

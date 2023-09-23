@@ -7,6 +7,7 @@ import '../modal/user_modal.dart';
 import '../service/datphong_service.dart';
 import '../service/phong_service.dart';
 import '../service/user_service.dart';
+import 'datphong/datphong_home.dart';
 import 'datphong/datphong_list.dart';
 import 'phong_list.dart';
 import 'profile/profile.dart';
@@ -32,79 +33,77 @@ class _MyHomeState extends State<MyHome> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> widgetOptions = <Widget>[
-      FutureBuilder<List<Phongs>>(
-        future: fetchPhongs(http.Client()),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Center(
-              child: Text('An error has occurred!'),
-            );
-          } else if (snapshot.hasData) {
-            return PhongsList(phongs: snapshot.data!);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
-      FutureBuilder<Users>(
-        future: getUserById(widget.userid),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ProfilePage1(user: snapshot.data!);
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
+    // final List<Widget> widgetOptions = <Widget>[
+    //   FutureBuilder<List<Phongs>>(
+    //     future: fetchPhongs(http.Client()),
+    //     builder: (context, snapshot) {
+    //       if (snapshot.hasError) {
+    //         return const Center(
+    //           child: Text('An error has occurred!'),
+    //         );
+    //       } else if (snapshot.hasData) {
+    //         return PhongsList(phongs: snapshot.data!);
+    //       } else {
+    //         return const Center(
+    //           child: CircularProgressIndicator(),
+    //         );
+    //       }
+    //     },
+    //   ),
+    //   // FutureBuilder<Users>(
+    //   //   future: getUserById(widget.userid),
+    //   //   builder: (context, snapshot) {
+    //   //     if (snapshot.hasData) {
+    //   //       return ProfilePage1(user: snapshot.data!);
+    //   //     } else if (snapshot.hasError) {
+    //   //       return Text('${snapshot.error}');
+    //   //     }
 
-          // By default, show a loading spinner.
-          return const Center(child: CircularProgressIndicator());
-        },
-      ),
-      // fetch user
-      FutureBuilder<Users>(
-        future: getUserById(widget.userid),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return FutureBuilder<List<Datphongs>>(
-              // fetch datphong cua
-              future: getDatphongByKhachhangid(
-                  http.Client(), snapshot.data!.khachhangs![0].id),
-              builder: (context2, snapshot2) {
-                if (snapshot2.hasError) {
-                  return const Center(
-                    child: Text('An error has occurred!'),
-                  );
-                } else if (snapshot2.hasData) {
-                  return DatphongsList(datphongs: snapshot2.data!);
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
-            );
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
+    //   //     // By default, show a loading spinner.
+    //   //     return const Center(child: CircularProgressIndicator());
+    //   //   },
+    //   // ),
+    //   // fetch user
+    //   FutureBuilder<Users>(
+    //     future: getUserById(widget.userid),
+    //     builder: (context, snapshot) {
+    //       if (snapshot.hasData) {
+    //         return FutureBuilder<List<Datphongs>>(
+    //           // fetch datphong cua
+    //           future: getDatphongByKhachhangid(
+    //               http.Client(), snapshot.data!.khachhangs![0].id),
+    //           builder: (context2, snapshot2) {
+    //             if (snapshot2.hasError) {
+    //               return const Center(
+    //                 child: Text('An error has occurred!'),
+    //               );
+    //             } else if (snapshot2.hasData) {
+    //               return DatphongsList(datphongs: snapshot2.data!);
+    //             } else {
+    //               return const Center(
+    //                 child: CircularProgressIndicator(),
+    //               );
+    //             }
+    //           },
+    //         );
+    //       } else if (snapshot.hasError) {
+    //         return Text('${snapshot.error}');
+    //       }
 
-          // By default, show a loading spinner.
-          return const Center(child: CircularProgressIndicator());
-        },
-      ),
-    ];
-    const appTitle = 'Khách sạn Sona';
+    //       // By default, show a loading spinner.
+    //       return const Center(child: CircularProgressIndicator());
+    //     },
+    //   ),
+    // ];
+    const appTitle = '';
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: appTitle,
         theme: ThemeData(
-          scaffoldBackgroundColor: const Color.fromARGB(255, 224, 224, 233),
-          // appBarTheme: AppBarTheme(
-          //   color: Color(0xff006df1),
-          // )
-        ),
+            scaffoldBackgroundColor: const Color.fromARGB(255, 224, 224, 233),
+            appBarTheme:
+                const AppBarTheme(color: Color(0xff006df1), elevation: 0)),
         home: Scaffold(
           appBar: AppBar(
             title: const Text(appTitle),
@@ -128,27 +127,114 @@ class _MyHomeState extends State<MyHome> {
               ),
             ],
           ),
-          body: Container(
-            child: widgetOptions.elementAt(_selectedIndex),
+          // body: Container(
+          //   child: widgetOptions.elementAt(_selectedIndex),
+          // ),
+          body: FutureBuilder<List<Phongs>>(
+            future: fetchPhongs(http.Client()),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return const Center(
+                  child: Text('An error has occurred!'),
+                );
+              } else if (snapshot.hasData) {
+                return PhongsList(phongs: snapshot.data!);
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Trang chủ',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person_rounded),
-                label: 'Tài khoản',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.door_back_door),
-                label: 'Phòng đã đặt',
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            onTap: _onItemTapped,
+          drawer: Drawer(
+            // Add a ListView to the drawer. This ensures the user can scroll
+            // through the options in the drawer if there isn't enough vertical
+            // space to fit everything.
+            child: ListView(
+                // Important: Remove any padding from the ListView.
+                padding: EdgeInsets.zero,
+                children: [
+                  const SizedBox (
+                    height: 100,
+                    child: DrawerHeader(
+                      decoration: BoxDecoration(color: Color(0xff006df1)),
+                      child: Text(
+                        'Sona',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    title: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.end,
+                      children: const [
+                        Icon(Icons.home),
+                        Text(' Trang chủ'),
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                MyHome(userid: widget.userid)),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.end,
+                      children: const [
+                        Icon(Icons.person_rounded),
+                        Text(' Profile'),
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                ProfileHome(userid: widget.userid)),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.end,
+                      children: const [
+                        Icon(Icons.hotel),
+                        Text(' Danh sách đặt phòng'),
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                DatphongHome(userid: widget.userid)),
+                      );
+                    },
+                  ),
+                ]),
           ),
+          // bottomNavigationBar: BottomNavigationBar(
+          //   items: const <BottomNavigationBarItem>[
+          //     BottomNavigationBarItem(
+          //       icon: Icon(Icons.home),
+          //       label: 'Trang chủ',
+          //     ),
+          //     // BottomNavigationBarItem(
+          //     //   icon: Icon(Icons.person_rounded),
+          //     //   label: 'Tài khoản',
+          //     // ),
+          //     BottomNavigationBarItem(
+          //       icon: Icon(Icons.door_back_door),
+          //       label: 'Phòng đã đặt',
+          //     ),
+          //   ],
+          //   currentIndex: _selectedIndex,
+          //   onTap: _onItemTapped,
+          // ),
         ));
   }
 }

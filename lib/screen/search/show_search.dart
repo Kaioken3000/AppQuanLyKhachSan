@@ -23,7 +23,11 @@ class ShowSearch extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: appTitle,
-        theme: ThemeData(scaffoldBackgroundColor: const Color.fromARGB(255, 224, 224, 233)),
+        theme: ThemeData(
+            scaffoldBackgroundColor: const Color.fromARGB(255, 224, 224, 233),
+            appBarTheme: const AppBarTheme(
+              color: Color(0xff006df1),
+            )),
         home: Scaffold(
           appBar: AppBar(
             title: const Text(appTitle),

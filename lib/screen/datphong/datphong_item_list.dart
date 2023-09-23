@@ -20,9 +20,13 @@ class DatphongItemList extends StatelessWidget {
         // );
       },
       child: Card(
-        // Define the shape of the card
+        elevation: 10, // the size of the shadow
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          side: const BorderSide(
+            color: Color.fromARGB(255, 232, 232, 239),
+            width: 5
+          ),
+          borderRadius: BorderRadius.circular(18),
         ),
         // Define how the card's content should be clipped
         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -44,7 +48,7 @@ class DatphongItemList extends StatelessWidget {
                         const Text(
                           "Mã đặt phòng:",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
+                              fontWeight: FontWeight.bold, fontSize: 15),
                         ),
                         Text(
                           "${datphongs[index].id}",
@@ -59,7 +63,7 @@ class DatphongItemList extends StatelessWidget {
                         const Text(
                           "Phòng đang ở:",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
+                              fontWeight: FontWeight.bold, fontSize: 15),
                         ),
                         Text(
                           "phòng ${datphongs[index].phongs![datphongs[index].phongs!.length - 1].soPhong}",
@@ -74,7 +78,7 @@ class DatphongItemList extends StatelessWidget {
                         const Text(
                           "Ngày đặt:",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
+                              fontWeight: FontWeight.bold, fontSize: 15),
                         ),
                         Text(
                           "${datphongs[index].ngaydat}",
@@ -89,7 +93,7 @@ class DatphongItemList extends StatelessWidget {
                         const Text(
                           "Ngày trả:",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
+                              fontWeight: FontWeight.bold, fontSize: 15),
                         ),
                         Text(
                           "${datphongs[index].ngaytra}",
@@ -104,7 +108,7 @@ class DatphongItemList extends StatelessWidget {
                         const Text(
                           "Số người ở:",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
+                              fontWeight: FontWeight.bold, fontSize: 15),
                         ),
                         Text(
                           "${datphongs[index].soluong}",
@@ -120,7 +124,7 @@ class DatphongItemList extends StatelessWidget {
                         const Text(
                           "Tình trạng đặt phòng: ",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
+                              fontWeight: FontWeight.bold, fontSize: 15),
                         ),
                         Padding(
                             padding: EdgeInsets.only(left: 20),
@@ -134,7 +138,7 @@ class DatphongItemList extends StatelessWidget {
                                       "- Xử lý:",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 18),
+                                          fontSize: 15),
                                     ),
                                     if (datphongs[index].tinhtrangxuly !=
                                         0) ...[
@@ -164,7 +168,7 @@ class DatphongItemList extends StatelessWidget {
                                       "- Nhận phòng:",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 18),
+                                          fontSize: 15),
                                     ),
                                     if (datphongs[index].tinhtrangnhanphong !=
                                         0) ...[
@@ -194,7 +198,7 @@ class DatphongItemList extends StatelessWidget {
                                       "- Thanh toán:",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 18),
+                                          fontSize: 15),
                                     ),
                                     if (datphongs[index].tinhtrangthanhtoan !=
                                         0) ...[

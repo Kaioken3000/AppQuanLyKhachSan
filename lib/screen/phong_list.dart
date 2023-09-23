@@ -13,33 +13,59 @@ class PhongsList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Card(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-          ),
-          // Set the clip behavior of the card
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      "Sona xin chào!👋",
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      "Tìm phòng ngay hôm nay",
-                    )
-                  ],
+        Container(
+          // decoration: const BoxDecoration(color: Colors.white),
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [Color(0xff0043ba), Color(0xff006df1)]),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              )),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, bottom: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        "Sona xin chào!👋",
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      Text(
+                        "Tìm phòng ngay hôm nay",
+                        style: TextStyle(color: Colors.white),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              const SearchBar(),
-            ],
+                Card(
+                  elevation: 0,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
+                  // Set the clip behavior of the card
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SearchBar(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         Expanded(
@@ -52,7 +78,7 @@ class PhongsList extends StatelessWidget {
                   index: index,
                 );
               }),
-        )
+        ),
       ],
     );
   }

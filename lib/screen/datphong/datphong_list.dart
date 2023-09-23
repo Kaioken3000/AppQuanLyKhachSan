@@ -12,10 +12,6 @@ class DatphongsList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(left: 20.0, top: 20.0),
-          child: Text("Lịch sử các đặt phòng đã thực hiện", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
-        ),
         Expanded(
           child: ListView.builder(
               padding: const EdgeInsets.all(8),

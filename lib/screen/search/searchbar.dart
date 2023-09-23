@@ -30,9 +30,9 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(9.0),
+      padding: const EdgeInsets.all(0.0),
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(13.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,67 +121,78 @@ class _SearchBarState extends State<SearchBar> {
             const SizedBox(
               height: 10,
             ),
-            TextField(
-              controller: soluong,
-              // decoration:
-              //     const InputDecoration(labelText: "Số lượng người ở tối đa"),
-              decoration: InputDecoration(
-                labelText: "Số lượng",
-                hintText: "Số lượng người ở tối đa",
-                isDense: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ], // Only numbers can be entered
-            ),
-            const SizedBox(
-              height: 10,
-            ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      // Luu thong tin search bar vao sharerefernce
-                      WidgetsFlutterBinding.ensureInitialized();
-                      SharedPreferences pref =
-                          await SharedPreferences.getInstance();
-                      pref.setString("ngayvao", ngayvao.text);
-                      pref.setString("ngayra", ngayra.text);
-                      pref.setString("soluong", soluong.text);
-
-                      // navigate qua trang show_search
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ShowSearch(
-                              ngayvao: ngayvao.text,
-                              ngayra: ngayra.text,
-                              soluong: soluong.text,
-                            ),
-                          ));
-                    },
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 15)),
-                    child: Text(
-                      "Tìm phòng trống",  
-                      style: GoogleFonts.outfit(fontSize: 20,
-                        fontWeight: FontWeight.bold,),
-                    //   style: TextStyle(
-                    //     fontSize: 20,
-                    //     fontWeight: FontWeight.bold,
-                    //   ),
+                Flexible(
+                  child: TextField(
+                    controller: soluong,
+                    // decoration:
+                    //     const InputDecoration(labelText: "Số lượng người ở tối đa"),
+                    decoration: InputDecoration(
+                      labelText: "Số lượng",
+                      hintText: "Số lượng người ở tối đa",
+                      isDense: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ], // Only numbers can be entered
                   ),
                 ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Flexible(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            // Luu thong tin search bar vao sharerefernce
+                            WidgetsFlutterBinding.ensureInitialized();
+                            SharedPreferences pref =
+                                await SharedPreferences.getInstance();
+                            pref.setString("ngayvao", ngayvao.text);
+                            pref.setString("ngayra", ngayra.text);
+                            pref.setString("soluong", soluong.text);
+
+                            // navigate qua trang show_search
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ShowSearch(
+                                    ngayvao: ngayvao.text,
+                                    ngayra: ngayra.text,
+                                    soluong: soluong.text,
+                                  ),
+                                ));
+                          },
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 15)),
+                          child: Wrap(
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: const [
+                                Icon(Icons.search),
+                                Text(
+                                  "Tìm",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ]),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ],
