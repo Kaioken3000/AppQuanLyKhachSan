@@ -1,10 +1,6 @@
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 
-import '../modal/user_modal.dart';
 
 class ApiClient {
   final Dio _dio = Dio();

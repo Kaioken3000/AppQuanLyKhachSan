@@ -24,8 +24,6 @@ import 'package:khachsanb1910261/screen/authScreen/login_screen.dart';
 import 'package:khachsanb1910261/screen/phong/phong_home.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'screen/authScreen/register.dart';
-import 'screen/stripe.dart';
 
 // Future<void> main() async {
 //   runApp(const MyApp());
@@ -43,7 +41,7 @@ Future<void> main() async {
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: userid == null ? const LoginScreen() : MyHome(userid: userid),
+    home: userid == null ? const LoginScreen() : PhongHome(userid: userid),
     // home: StripePaymentScreen(),
   ));
 } 
