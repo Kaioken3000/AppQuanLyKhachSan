@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:google_fonts/google_fonts.dart';
-
 import '../modal/phong_modal.dart';
 import 'phong_items_list.dart';
 import 'search/searchbar.dart';
@@ -28,14 +26,14 @@ class PhongsList extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  children: const [
                     Text(
                       "Sona xin chào!👋",
-                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "Tìm phòng ngay hôm nay",
-                      style: TextStyle(),
                     )
                   ],
                 ),

@@ -1,5 +1,12 @@
-import 'package:dio/dio.dart';
+import 'dart:convert';
 
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+
+import 'package:http/http.dart' as http;
+import 'package:khachsanb1910261/modal/khachhang_modal.dart';
+
+import '../modal/datphong_modal.dart';
 import '../modal/user_modal.dart';
 
 class DatphongService {
@@ -36,4 +43,22 @@ class DatphongService {
       return e.response!.data;
     }
   }
+}
+
+Future<List<Datphongs>> getDatphongByKhachhangid(http.Client client, khachhangid) async {
+  Map<String, String> header = {
+    'ngrok-skip-browser-warning': '1',
+  };
+  var uri = Uri.https(
+      'glorious-basically-molly.ngrok-free.app', 'mobile/client/getDatphongByKhachhangid/$khachhangid');
+  final response = await client.get(uri, headers: header);
+  // Use the compute function to run parseDatphongs in a separate isolate.
+  return compute(parseDatphongs, response.body);
+}
+
+// A function that converts a response body into a List<Photo>.
+List<Datphongs> parseDatphongs(String responseBody) {
+  final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
+
+  return parsed.map<Datphongs>((json) => Datphongs.fromJson(json)).toList();
 }

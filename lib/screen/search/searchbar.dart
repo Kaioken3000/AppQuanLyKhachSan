@@ -172,7 +172,7 @@ class _SearchBarState extends State<SearchBar> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 40, vertical: 15)),
                     child: Text(
-                      "Tìm phòng trống",
+                      "Tìm phòng trống",  
                       style: GoogleFonts.outfit(fontSize: 20,
                         fontWeight: FontWeight.bold,),
                     //   style: TextStyle(
