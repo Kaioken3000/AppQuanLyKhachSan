@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../modal/user_modal.dart';
 import '../../service/user_service.dart';
 import '../authScreen/login_screen.dart';
-import 'profile.dart';
 import 'profile2.dart';
 
 class ProfileHome extends StatelessWidget {

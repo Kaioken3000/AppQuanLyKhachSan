@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'chitiet/chitiet_home.dart';
+import '../chitiet/chitiet_home.dart';
 
-import '../modal/phong_modal.dart';
-import 'chitiet/xacnhan.dart';
+import '../../modal/phong_modal.dart';
+import '../chitiet/xacnhan.dart';
 
 class PhongItemList extends StatelessWidget {
   const PhongItemList({super.key, required this.phongs, required this.index});

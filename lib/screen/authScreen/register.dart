@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/api_client.dart';
 import '../../utils/validators.dart';
-import '../myhome.dart';
+import '../phong/phong_home.dart';
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -58,7 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => MyHome(userid: res["user"]["id"])));
+                builder: (context) => PhongHome(userid: res["user"]["id"])));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: const Text('Error'),

@@ -21,7 +21,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:khachsanb1910261/screen/authScreen/login_screen.dart';
-import 'package:khachsanb1910261/screen/myhome.dart';
+import 'package:khachsanb1910261/screen/phong/phong_home.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screen/authScreen/register.dart';

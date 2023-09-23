@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/api_client.dart';
 import '../../utils/validators.dart';
-import '../myhome.dart';
+import '../phong/phong_home.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => MyHome(userid: res["user"][0]["id"])));
+                builder: (context) => PhongHome(userid: res["user"][0]["id"])));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: const Text('Error'),

@@ -1,28 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../../modal/phong_modal.dart';
-import '../modal/datphong_modal.dart';
-import '../modal/user_modal.dart';
-import '../service/datphong_service.dart';
-import '../service/phong_service.dart';
-import '../service/user_service.dart';
-import 'datphong/datphong_home.dart';
-import 'datphong/datphong_list.dart';
+import '../../../modal/phong_modal.dart';
+import '../../service/phong_service.dart';
+import '../datphong/datphong_home.dart';
 import 'phong_list.dart';
-import 'profile/profile.dart';
-import 'profile/profile2.dart';
-import 'profile/profile_home.dart';
+import '../profile/profile_home.dart';
 
-class MyHome extends StatefulWidget {
-  const MyHome({super.key, required this.userid});
+class PhongHome extends StatefulWidget {
+  const PhongHome({super.key, required this.userid});
   final int userid;
 
   @override
-  State<MyHome> createState() => _MyHomeState();
+  State<PhongHome> createState() => _PhongHomeState();
 }
 
-class _MyHomeState extends State<MyHome> {
+class _PhongHomeState extends State<PhongHome> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -177,7 +170,7 @@ class _MyHomeState extends State<MyHome> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                MyHome(userid: widget.userid)),
+                                PhongHome(userid: widget.userid)),
                       );
                     },
                   ),

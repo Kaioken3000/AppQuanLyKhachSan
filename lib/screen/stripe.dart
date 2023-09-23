@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 import '../modal/user_modal.dart';
 import '../service/datphong_service.dart';
-import 'myhome.dart';
+import 'phong/phong_home.dart';
 
 class StripePaymentScreen extends StatefulWidget {
   const StripePaymentScreen(
@@ -112,7 +112,7 @@ class _StripePaymentScreenState extends State<StripePaymentScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => MyHome(
+            builder: (context) => PhongHome(
                   userid: widget.user.id!,
                 )),
       );
