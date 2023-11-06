@@ -109,9 +109,8 @@ class _XacnhanState extends State<Xacnhan> {
                 // Set the clip behavior of the card
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 elevation: 0,
-                margin: const EdgeInsets.all(8.0),
                 child: Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(30.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,

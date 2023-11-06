@@ -17,7 +17,11 @@ class SearchItemList extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ChitietHome(phong: phongs[index])),
+              builder: (context) => ChitietHome(
+                    phong: phongs[index],
+                    kqngay: 0,
+                    kqo: 0,
+                  )),
         );
       },
       child: Card(
@@ -38,7 +42,7 @@ class SearchItemList extends StatelessWidget {
               children: <Widget>[
                 // Add padding around the row widget
                 Padding(
-                  padding: const EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(9),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -89,7 +93,7 @@ class SearchItemList extends StatelessWidget {
                                     "${phongs[index].loaiphongs!.gia.toString()}đ",
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
-                                      color: Color.fromARGB(255, 254, 178, 0),
+                                      // color: Color.fromARGB(255, 254, 178, 0),
                                       fontSize: 18,
                                     ),
                                   ),

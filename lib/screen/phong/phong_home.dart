@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../modal/phong_modal.dart';
 import '../../service/phong_service.dart';
 import '../datphong/datphong_home.dart';
+import '../searchRoom/search_room_home.dart';
 import 'phong_list.dart';
 import '../profile/profile_home.dart';
 
@@ -26,71 +29,17 @@ class _PhongHomeState extends State<PhongHome> {
 
   @override
   Widget build(BuildContext context) {
-    // final List<Widget> widgetOptions = <Widget>[
-    //   FutureBuilder<List<Phongs>>(
-    //     future: fetchPhongs(http.Client()),
-    //     builder: (context, snapshot) {
-    //       if (snapshot.hasError) {
-    //         return const Center(
-    //           child: Text('An error has occurred!'),
-    //         );
-    //       } else if (snapshot.hasData) {
-    //         return PhongsList(phongs: snapshot.data!);
-    //       } else {
-    //         return const Center(
-    //           child: CircularProgressIndicator(),
-    //         );
-    //       }
-    //     },
-    //   ),
-    //   // FutureBuilder<Users>(
-    //   //   future: getUserById(widget.userid),
-    //   //   builder: (context, snapshot) {
-    //   //     if (snapshot.hasData) {
-    //   //       return ProfilePage1(user: snapshot.data!);
-    //   //     } else if (snapshot.hasError) {
-    //   //       return Text('${snapshot.error}');
-    //   //     }
-
-    //   //     // By default, show a loading spinner.
-    //   //     return const Center(child: CircularProgressIndicator());
-    //   //   },
-    //   // ),
-    //   // fetch user
-    //   FutureBuilder<Users>(
-    //     future: getUserById(widget.userid),
-    //     builder: (context, snapshot) {
-    //       if (snapshot.hasData) {
-    //         return FutureBuilder<List<Datphongs>>(
-    //           // fetch datphong cua
-    //           future: getDatphongByKhachhangid(
-    //               http.Client(), snapshot.data!.khachhangs![0].id),
-    //           builder: (context2, snapshot2) {
-    //             if (snapshot2.hasError) {
-    //               return const Center(
-    //                 child: Text('An error has occurred!'),
-    //               );
-    //             } else if (snapshot2.hasData) {
-    //               return DatphongsList(datphongs: snapshot2.data!);
-    //             } else {
-    //               return const Center(
-    //                 child: CircularProgressIndicator(),
-    //               );
-    //             }
-    //           },
-    //         );
-    //       } else if (snapshot.hasError) {
-    //         return Text('${snapshot.error}');
-    //       }
-
-    //       // By default, show a loading spinner.
-    //       return const Center(child: CircularProgressIndicator());
-    //     },
-    //   ),
-    // ];
-    const appTitle = '';
+    const appTitle = 'Trang chủ';
 
     return MaterialApp(
+        scrollBehavior: const MaterialScrollBehavior().copyWith(
+          dragDevices: {
+            PointerDeviceKind.mouse,
+            PointerDeviceKind.touch,
+            PointerDeviceKind.stylus,
+            PointerDeviceKind.unknown
+          },
+        ),
         debugShowCheckedModeBanner: false,
         title: appTitle,
         theme: ThemeData(
@@ -99,23 +48,40 @@ class _PhongHomeState extends State<PhongHome> {
                 const AppBarTheme(color: Color(0xff006df1), elevation: 0)),
         home: Scaffold(
           appBar: AppBar(
-            title: const Text(appTitle),
+            // title: Center(child: const Text(appTitle, style: TextStyle(fontSize: 13),)),
             actions: <Widget>[
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  child: IconButton(
-                    icon: const Icon(Icons.person_rounded),
-                    tooltip: 'User profile',
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                ProfileHome(userid: widget.userid)),
-                      );
-                    },
-                  ),
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SearchRoomHome()),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        )),
+                    CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: IconButton(
+                        icon: const Icon(Icons.person_rounded),
+                        tooltip: 'User profile',
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ProfileHome(userid: widget.userid)),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -147,9 +113,10 @@ class _PhongHomeState extends State<PhongHome> {
                 // Important: Remove any padding from the ListView.
                 padding: EdgeInsets.zero,
                 children: [
-                  const SizedBox (
+                  const SizedBox(
                     height: 100,
                     child: DrawerHeader(
+                      padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(color: Color(0xff006df1)),
                       child: Text(
                         'Sona',

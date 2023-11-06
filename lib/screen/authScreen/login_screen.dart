@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-        backgroundColor: Colors.blueGrey[200],
+        backgroundColor: Colors.white,
         body: Form(
           key: _formKey,
           child: Stack(children: [

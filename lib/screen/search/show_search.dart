@@ -41,22 +41,75 @@ class ShowSearch extends StatelessWidget {
               ),
             ),
           ),
-          body: FutureBuilder<List<Phongs>>(
-            future:
-                fetchPhongsWithFilter(http.Client(), ngayvao, ngayra, soluong),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return const Center(
-                  child: Text('An error has occurred!'),
-                );
-              } else if (snapshot.hasData) {
-                return SearchList(phongs: snapshot.data!);
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
+          body: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(left: 11, right: 11),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                )),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                const Text(
+                                  "Ngày vào: ",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(ngayvao)
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Text(
+                                  "Ngày ra: ",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(ngayra)
+                              ],
+                            ),
+                          ]),
+                      Row(
+                        children: [
+                          const Text(
+                            "Số lượng: ",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(soluong)
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: FutureBuilder<List<Phongs>>(
+                  future: fetchPhongsWithFilter(
+                      http.Client(), ngayvao, ngayra, soluong),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Center(
+                        child: Text('An error has occurred!'),
+                      );
+                    } else if (snapshot.hasData) {
+                      return SearchList(phongs: snapshot.data!);
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ],
           ),
         ));
   }

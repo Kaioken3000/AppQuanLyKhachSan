@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
+import '../core/api_client.dart';
 import '../modal/phong_modal.dart';
 
 Future<List<Phongs>> fetchPhongs(http.Client client) async {
@@ -45,6 +46,27 @@ Future<List<Phongs>> fetchPhongsWithFilter(
       'mobile/client/kiemtraphongtrong/ngaydat=$ngayvao/ngaytra=$ngayra/soluong=$soluong');
   final response = await client.get(uri, headers: header);
   // Use the compute function to run parsePhongs in a separate isolate.
+  return compute(parsePhongs, response.body);
+}
+
+Future<List<Phongs>> searchPhong(
+    songuoiphong, tenphong, tuychonggia, giaphong, chinhanhid) async {
+  Map<String, String> header = {
+    'ngrok-skip-browser-warning': '1',
+  };
+
+  Map<String, dynamic> body = {
+    'songuoiphong': songuoiphong,
+    'tenphong': tenphong,
+    'tuychonggia': tuychonggia,
+    'giaphong': giaphong,
+    'chinhanhid': chinhanhid,
+  };
+
+  var uri = Uri.https(
+      'glorious-basically-molly.ngrok-free.app', 'mobile/client/searchPhong/');
+  final response = await http.post(uri, headers: header, body: body);
+
   return compute(parsePhongs, response.body);
 }
 

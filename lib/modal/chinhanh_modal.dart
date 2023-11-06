@@ -8,6 +8,12 @@ class Chinhanhs {
   String? createdAt;
   String? updatedAt;
 
+  @override
+  bool operator ==(Object other) => other is Chinhanhs && other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
+
   Chinhanhs(
       {this.id,
       this.ten,

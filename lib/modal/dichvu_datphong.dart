@@ -1,18 +1,18 @@
-class DatphongPhong {
+class DichvuDatphong {
   int? datphongid;
-  int? phongid;
+  int? dichvuid;
 
-  DatphongPhong({this.datphongid, this.phongid});
+  DichvuDatphong({this.datphongid, this.dichvuid});
 
-  DatphongPhong.fromJson(Map<String, dynamic> json) {
+  DichvuDatphong.fromJson(Map<String, dynamic> json) {
     datphongid = json['datphongid'];
-    phongid = json['phongid'];
+    dichvuid = json['dichvuid'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['datphongid'] = this.datphongid;
-    data['phongid'] = this.phongid;
+    data['dichvuid'] = this.dichvuid;
     return data;
   }
 }

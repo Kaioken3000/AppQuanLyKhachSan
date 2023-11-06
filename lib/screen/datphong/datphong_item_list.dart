@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../modal/datphong_modal.dart';
+import 'chitiet_datphong/chitiet_datphong_home.dart';
 
 class DatphongItemList extends StatelessWidget {
   const DatphongItemList(
@@ -13,19 +14,18 @@ class DatphongItemList extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //       builder: (context) => ChitietHome(phong: datphongs[index])),
-        // );
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  ChitietDatphongHome(datphong: datphongs[index]),
+            ));
       },
       child: Card(
         elevation: 10, // the size of the shadow
         shape: RoundedRectangleBorder(
           side: const BorderSide(
-            color: Color.fromARGB(255, 232, 232, 239),
-            width: 5
-          ),
+              color: Color.fromARGB(255, 232, 232, 239), width: 5),
           borderRadius: BorderRadius.circular(18),
         ),
         // Define how the card's content should be clipped

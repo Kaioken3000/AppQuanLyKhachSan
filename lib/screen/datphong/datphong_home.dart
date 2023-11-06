@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,12 +19,20 @@ class DatphongHome extends StatelessWidget {
     const appTitle = 'Danh sách đặt phòng';
 
     return MaterialApp(
+        scrollBehavior: const MaterialScrollBehavior().copyWith(
+          dragDevices: {
+            PointerDeviceKind.mouse,
+            PointerDeviceKind.touch,
+            PointerDeviceKind.stylus,
+            PointerDeviceKind.unknown
+          },
+        ),
         debugShowCheckedModeBanner: false,
         title: appTitle,
         home: Scaffold(
           appBar: AppBar(
             title: const Text("Danh sách đặt phòng"),
-            backgroundColor: Color(0xff006df1),
+            backgroundColor: const Color(0xff006df1),
             elevation: 0,
             leading: InkWell(
               onTap: () {

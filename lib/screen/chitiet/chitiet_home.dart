@@ -4,8 +4,14 @@ import '../../modal/phong_modal.dart';
 import 'chitiet_item.dart';
 
 class ChitietHome extends StatelessWidget {
-  const ChitietHome({super.key, required this.phong});
+  const ChitietHome(
+      {super.key,
+      required this.phong,
+      required this.kqngay,
+      required this.kqo});
   final Phongs phong;
+  final int kqngay;
+  final int kqo;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +38,10 @@ class ChitietHome extends StatelessWidget {
                 ),
               ),
             ),
-            body: ChitietItem(phongs: phong)));
+            body: ChitietItem(
+              phongs: phong,
+              kqngay: kqngay,
+              kqo: kqo,
+            )));
   }
 }

@@ -1,4 +1,7 @@
+import 'anuong_modal.dart';
+import 'dichvu_modal.dart';
 import 'phong_modal.dart';
+import 'thanhtoan_modal.dart';
 
 class Datphongs {
   int? id;
@@ -13,6 +16,9 @@ class Datphongs {
   String? updatedAt;
   int? huydatphong;
   List<Phongs>? phongs;
+  List<Dichvus>? dichvus;
+  List<Anuongs>? anuongs;
+  List<Thanhtoans>? thanhtoans;
 
   Datphongs(
       {this.id,
@@ -26,7 +32,10 @@ class Datphongs {
       this.createdAt,
       this.updatedAt,
       this.huydatphong,
-      this.phongs});
+      this.phongs,
+      this.dichvus,
+      this.anuongs,
+      this.thanhtoans});
 
   Datphongs.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -46,6 +55,24 @@ class Datphongs {
         phongs!.add(new Phongs.fromJson(v));
       });
     }
+    if (json['dichvus'] != null) {
+      dichvus = <Dichvus>[];
+      json['dichvus'].forEach((v) {
+        dichvus!.add(new Dichvus.fromJson(v));
+      });
+    }
+    if (json['anuongs'] != null) {
+      anuongs = <Anuongs>[];
+      json['anuongs'].forEach((v) {
+        anuongs!.add(new Anuongs.fromJson(v));
+      });
+    }
+    if (json['thanhtoans'] != null) {
+      thanhtoans = <Thanhtoans>[];
+      json['thanhtoans'].forEach((v) {
+        thanhtoans!.add(new Thanhtoans.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -63,6 +90,15 @@ class Datphongs {
     data['huydatphong'] = this.huydatphong;
     if (this.phongs != null) {
       data['phongs'] = this.phongs!.map((v) => v.toJson()).toList();
+    }
+    if (this.dichvus != null) {
+      data['dichvus'] = this.dichvus!.map((v) => v.toJson()).toList();
+    }
+    if (this.anuongs != null) {
+      data['anuongs'] = this.anuongs!.map((v) => v.toJson()).toList();
+    }
+    if (this.thanhtoans != null) {
+      data['thanhtoans'] = this.thanhtoans!.map((v) => v.toJson()).toList();
     }
     return data;
   }
