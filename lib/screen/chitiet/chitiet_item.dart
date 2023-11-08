@@ -5,6 +5,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:http/http.dart' as http;
 
 import '../../service/comment_service.dart';
+import '../virtualtour/virtualtourpage.dart';
 import 'comment_chitiet.dart';
 import 'datphong_input.dart';
 import 'show_comment_phong.dart';
@@ -36,10 +37,26 @@ class ChitietItem extends StatelessWidget {
                 Container(
                   decoration: const BoxDecoration(color: Colors.white),
                   child: Padding(
-                    padding: const EdgeInsets.all(30.0),
+                    padding:
+                        const EdgeInsets.only(left: 30, right: 30, bottom: 30),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
+                        const SizedBox(height: 8),
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      VirtualtourPage(phongid: phongs.soPhong!),
+                                ),
+                              );
+                            },
+                            child: const Text("Xem virtual tour"),
+                          ),
+                        ),
                         const SizedBox(height: 8),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
