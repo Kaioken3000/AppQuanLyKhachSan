@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import '../../../modal/phong_modal.dart';
 import '../../service/phong_service.dart';
 import '../datphong/datphong_home.dart';
+import '../game/memorycardpage.dart';
 import '../game/spinningwheel.dart';
 import '../searchRoom/search_room_home.dart';
 import 'phong_list.dart';
@@ -189,6 +190,22 @@ class _PhongHomeState extends State<PhongHome> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => SpinningWheelPage()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.end,
+                      children: const [
+                        Icon(Icons.gamepad),
+                        Text(' Game tích điểm'),
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MemoryCardPage()),
                       );
                     },
                   ),

@@ -46,6 +46,7 @@ dependencies:
   flutter_html: ^2.1.2
   flutter_fortune_wheel: ^1.3.0
   flutter_spinning_wheel: ^1.1.0
+  flip_card: ^0.7.0
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +71,7 @@ flutter:
   uses-material-design: true
   assets:
   - assets/
+  - assets/memorycard/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
