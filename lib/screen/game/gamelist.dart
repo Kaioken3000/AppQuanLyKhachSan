@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'memorycardpage.dart';
 import 'spinningwheel.dart';
+import 'tripleseven.dart';
 
 class GameList extends StatelessWidget {
   const GameList({super.key});
@@ -84,6 +85,39 @@ class GameList extends StatelessWidget {
                       child: Center(
                           child: Text(
                         "Vòng quay may mắn",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      )),
+                    ),
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const TripleSeven()),
+                  );
+                },
+                child: Column(
+                  children: [
+                    Container(
+                      height: 175,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        image: DecorationImage(
+                          image: AssetImage("assets/slotgame/slottitle.jpg"),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      padding: const EdgeInsets.all(8),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                          child: Text(
+                        "777",
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       )),

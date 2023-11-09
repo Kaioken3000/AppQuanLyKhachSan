@@ -246,7 +246,8 @@ class _SpinningWheelPageState extends State<SpinningWheelPage> {
                       child: Center(
                           child: Text(
                         "Vòng xoay may mắn",
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       )),
                     ),
                     Expanded(
