@@ -8,6 +8,8 @@ import '../../modal/user_modal.dart';
 import '../../service/diem_service.dart';
 import '../../service/user_service.dart';
 
+const List<String> list = <String>['1 lượt', '5 lượt', '10 lượt'];
+
 class TripleSeven extends StatefulWidget {
   const TripleSeven({super.key});
 
@@ -17,6 +19,8 @@ class TripleSeven extends StatefulWidget {
 
 class _TripleSevenState extends State<TripleSeven> {
   late List<StreamController<int>> selected;
+
+  String dropdownValue = list.first;
 
   var randomval1 = 0;
   var randomval2 = 0;
@@ -45,12 +49,23 @@ class _TripleSevenState extends State<TripleSeven> {
 
   late Users user;
 
+  late int diem = 0;
+  late int luot = 0;
+
   _loadStatusList() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var userid = prefs.getInt("userid");
+    int? luot777 = prefs.getInt("luot777");
     var newuser = await getUserById(userid);
+
+    if (luot777 == null) {
+      prefs.setInt("luot777", 0);
+      luot777 = prefs.getInt("luot777");
+    }
     setState(() {
+      luot = luot777!;
       user = newuser;
+      diem = newuser.khachhangs![0].diem!;
     });
   }
 
@@ -63,6 +78,26 @@ class _TripleSevenState extends State<TripleSeven> {
     var res = await capnhatdiem(data);
     print(data);
     print(res);
+  }
+
+  Future<void> thuchientrudiem(int diemtru, int luotcong) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> data = {
+      'khachhangid': user.khachhangs![0].id,
+      'diem': diemtru,
+    };
+
+    var res = await trudiem(data);
+    print(data);
+    print(res);
+
+    if (res["Message"] == 200) {
+      setState(() {
+        luot += luotcong;
+        prefs.setInt("luot777", luot);
+        diem -= diemtru;
+      });
+    }
   }
 
   @override
@@ -167,14 +202,144 @@ class _TripleSevenState extends State<TripleSeven> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 100.0),
+              padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(30)),
+                        color: Colors.blue,
+                        border: Border.all(color: Colors.white, width: 5),
+                      ),
+                      width: 150,
+                      height: 50,
+                      child: Center(
+                        child: Text(
+                          "Điểm tích luỹ: $diem",
+                          style: const TextStyle(
+                              fontSize: 13, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(30)),
+                        color: Colors.blue,
+                        border: Border.all(color: Colors.white, width: 5),
+                      ),
+                      width: 150,
+                      height: 50,
+                      child: Center(
+                        child: Text(
+                          "Lượt: $luot",
+                          style: const TextStyle(
+                              fontSize: 13, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ]),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 90.0, right: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // const Text("Mua lượt chơi: "),
+                  Flexible(
+                    child: DropdownButton<String>(
+                      value: dropdownValue,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      elevation: 16,
+                      onChanged: (String? value) {
+                        setState(() {
+                          dropdownValue = value!;
+                        });
+                      },
+                      items: list.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        fixedSize: const Size.fromHeight(40),
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: Colors.white, width: 5),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        elevation: 5,
+                        shadowColor: Colors.black),
+                    onPressed: () {
+                      showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Basic dialog title'),
+                            content: Text('Bạn muốn mua $dropdownValue \n'
+                                'Mỗi lượt sẽ trừ 100 điểm tích luỹ'),
+                            actions: <Widget>[
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  textStyle:
+                                      Theme.of(context).textTheme.labelLarge,
+                                ),
+                                child: const Text('OK'),
+                                onPressed: () {
+                                  if (dropdownValue == "1 lượt") {
+                                    thuchientrudiem(100, 1);
+                                  } else if (dropdownValue == "5 lượt") {
+                                    thuchientrudiem(500, 5);
+                                  } else if (dropdownValue == "10 lượt") {
+                                    thuchientrudiem(1000, 10);
+                                  }
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  textStyle:
+                                      Theme.of(context).textTheme.labelLarge,
+                                ),
+                                child: const Text('Huỷ'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: const SizedBox(
+                      width: 118,
+                      child: Center(
+                        child: Text(
+                          "Mua lượt chơi",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 50.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: bar,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(50.0),
+              padding: const EdgeInsets.only(top: 50.0),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     fixedSize: const Size.fromHeight(40),
@@ -184,23 +349,50 @@ class _TripleSevenState extends State<TripleSeven> {
                     ),
                     elevation: 5,
                     shadowColor: Colors.black),
-                onPressed: () {
-                  setState(
-                    () => selected[0].add(
-                      randomval1 = Fortune.randomInt(0, items.length),
-                    ),
-                  );
-                  setState(
-                    () => selected[1].add(
-                      randomval2 = Fortune.randomInt(0, items.length),
-                    ),
-                  );
-                  setState(
-                    () => selected[2].add(
-                      randomval3 = Fortune.randomInt(0, items.length),
-                    ),
-                  );
-                },
+                onPressed: luot > 0
+                    ? () {
+                        setState(
+                          () => selected[0].add(
+                            randomval1 = Fortune.randomInt(0, items.length),
+                          ),
+                        );
+                        setState(
+                          () => selected[1].add(
+                            randomval2 = Fortune.randomInt(0, items.length),
+                          ),
+                        );
+                        setState(
+                          () => selected[2].add(
+                            randomval3 = Fortune.randomInt(0, items.length),
+                          ),
+                        );
+                        setState(() async {
+                          luot--;
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          prefs.setInt("luot777", luot);
+                        });
+                      }
+                    : () {
+                        showDialog<void>(
+                          context: context,
+                          barrierDismissible: true, // user must tap button!
+                          builder: (BuildContext context) {
+                            thuchiencapnhatdiem();
+                            return AlertDialog(
+                              title: const Text('Thông báo'),
+                              content: SingleChildScrollView(
+                                child: ListBody(
+                                  children: const <Widget>[
+                                    Text(
+                                        'Bạn đã hết lượt hãy mua thêm lượt mới!'),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
                 child: const SizedBox(
                   width: 100,
                   child: Center(
