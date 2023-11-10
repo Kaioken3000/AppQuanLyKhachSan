@@ -58,6 +58,10 @@ class _MemoryCardPageState extends State<MemoryCardPage> {
       'diem': score,
     };
 
+    setState(() {
+      diem += score;
+    });
+
     var res = await capnhatdiem(data);
     print(data);
     print(res);
@@ -182,8 +186,7 @@ class _MemoryCardPageState extends State<MemoryCardPage> {
                           dropdownValue = value!;
                         });
                       },
-                      items:
-                          list.map<DropdownMenuItem<String>>((String value) {
+                      items: list.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -195,8 +198,7 @@ class _MemoryCardPageState extends State<MemoryCardPage> {
                     style: ElevatedButton.styleFrom(
                         fixedSize: const Size.fromHeight(40),
                         shape: RoundedRectangleBorder(
-                          side:
-                              const BorderSide(color: Colors.white, width: 5),
+                          side: const BorderSide(color: Colors.white, width: 5),
                           borderRadius: BorderRadius.circular(50),
                         ),
                         elevation: 5,
@@ -290,8 +292,7 @@ class _MemoryCardPageState extends State<MemoryCardPage> {
                         onTap: luot > 0
                             ? () {
                                 setState(() {
-                                  game.gameImg![index] =
-                                      game.cards_list[index];
+                                  game.gameImg![index] = game.cards_list[index];
                                   game.matchCheck
                                       .add({index: game.cards_list[index]});
                                   move++;
@@ -335,8 +336,7 @@ class _MemoryCardPageState extends State<MemoryCardPage> {
                                     // check end game
                                   } else {
                                     Future.delayed(
-                                        const Duration(milliseconds: 300),
-                                        () {
+                                        const Duration(milliseconds: 300), () {
                                       setState(() {
                                         game.gameImg![game.matchCheck[0].keys
                                             .first] = game.hiddenCardpath;

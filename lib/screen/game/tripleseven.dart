@@ -75,6 +75,10 @@ class _TripleSevenState extends State<TripleSeven> {
       'diem': 100,
     };
 
+    setState(() {
+      diem += 100;
+    });
+
     var res = await capnhatdiem(data);
     print(data);
     print(res);

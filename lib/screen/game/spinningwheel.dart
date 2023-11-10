@@ -116,6 +116,9 @@ class _SpinningWheelPageState extends State<SpinningWheelPage> {
     };
 
     var res = await capnhatdiem(data);
+    setState(() {
+      diem += (randomval + 1);
+    });
     print(data);
     print(res);
   }
