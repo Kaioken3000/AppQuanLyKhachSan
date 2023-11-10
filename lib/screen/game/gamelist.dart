@@ -40,7 +40,7 @@ class GameList extends StatelessWidget {
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         image: DecorationImage(
-                          image: AssetImage("assets/memory_card.PNG"),
+                          image: AssetImage("assets/memorycard/memorycard.PNG"),
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -73,7 +73,7 @@ class GameList extends StatelessWidget {
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                           image: DecorationImage(
-                            image: AssetImage("assets/spinning_wheel.png"),
+                            image: AssetImage("assets/spinning_wheel2.png"),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -107,7 +107,7 @@ class GameList extends StatelessWidget {
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         image: DecorationImage(
-                          image: AssetImage("assets/slotgame/slottitle.jpg"),
+                          image: AssetImage("assets/slottitle2.png"),
                           fit: BoxFit.fill,
                         ),
                       ),

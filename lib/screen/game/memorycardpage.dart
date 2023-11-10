@@ -8,6 +8,8 @@ import '../../modal/user_modal.dart';
 import '../../service/diem_service.dart';
 import '../../service/user_service.dart';
 
+const List<String> list = <String>['1 lượt', '5 lượt', '10 lượt'];
+
 class MemoryCardPage extends StatefulWidget {
   const MemoryCardPage({super.key});
 
@@ -21,6 +23,10 @@ class _MemoryCardPageState extends State<MemoryCardPage> {
   int move = 0;
   late Users user;
 
+  String dropdownValue = list.first;
+  late int diem = 0;
+  late int luot = 0;
+
   @override
   void initState() {
     game.initGame();
@@ -32,8 +38,17 @@ class _MemoryCardPageState extends State<MemoryCardPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var userid = prefs.getInt("userid");
     var newuser = await getUserById(userid);
+
+    int? luotonho = prefs.getInt("luotonho");
+    if (luotonho == null) {
+      prefs.setInt("luotonho", 0);
+      luotonho = prefs.getInt("luotonho");
+    }
+
     setState(() {
       user = newuser;
+      diem = newuser.khachhangs![0].diem!;
+      luot = luotonho!;
     });
   }
 
@@ -46,6 +61,26 @@ class _MemoryCardPageState extends State<MemoryCardPage> {
     var res = await capnhatdiem(data);
     print(data);
     print(res);
+  }
+
+  Future<void> thuchientrudiem(int diemtru, int luotcong) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> data = {
+      'khachhangid': user.khachhangs![0].id,
+      'diem': diemtru,
+    };
+
+    var res = await trudiem(data);
+    print(data);
+    print(res);
+
+    if (res["Message"] == 200) {
+      setState(() {
+        luot += luotcong;
+        prefs.setInt("luotonho", luot);
+        diem -= diemtru;
+      });
+    }
   }
 
   @override
@@ -81,6 +116,147 @@ class _MemoryCardPageState extends State<MemoryCardPage> {
         ),
         body: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(30)),
+                        color: Colors.blue,
+                        border: Border.all(color: Colors.white, width: 5),
+                      ),
+                      width: 180,
+                      height: 50,
+                      child: Center(
+                        child: Text(
+                          "Điểm tích luỹ: $diem",
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(30)),
+                        color: Colors.blue,
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 5,
+                        ),
+                      ),
+                      width: 150,
+                      height: 50,
+                      child: Center(
+                        child: Text(
+                          "Lượt: $luot",
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 115.0, right: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // const Text("Mua lượt chơi: "),
+                  Flexible(
+                    child: DropdownButton<String>(
+                      value: dropdownValue,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      elevation: 16,
+                      onChanged: (String? value) {
+                        setState(() {
+                          dropdownValue = value!;
+                        });
+                      },
+                      items:
+                          list.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        fixedSize: const Size.fromHeight(40),
+                        shape: RoundedRectangleBorder(
+                          side:
+                              const BorderSide(color: Colors.white, width: 5),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        elevation: 5,
+                        shadowColor: Colors.black),
+                    onPressed: () {
+                      showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Basic dialog title'),
+                            content: Text('Bạn muốn mua $dropdownValue \n'
+                                'Mỗi lượt sẽ trừ 100 điểm tích luỹ'),
+                            actions: <Widget>[
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  textStyle:
+                                      Theme.of(context).textTheme.labelLarge,
+                                ),
+                                child: const Text('OK'),
+                                onPressed: () {
+                                  if (dropdownValue == "1 lượt") {
+                                    thuchientrudiem(100, 1);
+                                  } else if (dropdownValue == "5 lượt") {
+                                    thuchientrudiem(500, 5);
+                                  } else if (dropdownValue == "10 lượt") {
+                                    thuchientrudiem(1000, 10);
+                                  }
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  textStyle:
+                                      Theme.of(context).textTheme.labelLarge,
+                                ),
+                                child: const Text('Huỷ'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: const SizedBox(
+                      width: 118,
+                      child: Center(
+                        child: Text(
+                          "Mua lượt chơi",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             const Padding(
               padding: EdgeInsets.all(20.0),
               child: Text(
@@ -111,57 +287,88 @@ class _MemoryCardPageState extends State<MemoryCardPage> {
                     ),
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            game.gameImg![index] = game.cards_list[index];
-                            game.matchCheck
-                                .add({index: game.cards_list[index]});
-                            move++;
-                          });
+                        onTap: luot > 0
+                            ? () {
+                                setState(() {
+                                  game.gameImg![index] =
+                                      game.cards_list[index];
+                                  game.matchCheck
+                                      .add({index: game.cards_list[index]});
+                                  move++;
+                                });
 
-                          if (game.matchCheck.length == 2) {
-                            if (game.matchCheck[0].values.first ==
-                                game.matchCheck[1].values.first) {
-                              setState(() {
-                                score++;
-                              });
-                              game.matchCheck.clear();
-                              if (score == game.gameImg!.length / 2) {
+                                if (game.matchCheck.length == 2) {
+                                  if (game.matchCheck[0].values.first ==
+                                      game.matchCheck[1].values.first) {
+                                    setState(() {
+                                      score++;
+                                    });
+                                    game.matchCheck.clear();
+                                    if (score == game.gameImg!.length / 2) {
+                                      setState(() async {
+                                        luot--;
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        prefs.setInt("luotonho", luot);
+                                        showDialog<void>(
+                                          context: context,
+                                          barrierDismissible:
+                                              true, // user must tap button!
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: const Text('Thông báo'),
+                                              content: SingleChildScrollView(
+                                                child: ListBody(
+                                                  children: <Widget>[
+                                                    Text(
+                                                        'Bạn được cộng $score điểm vào điểm tích luỹ!'),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                        thuchiencapnhatdiem();
+                                      });
+                                    }
+                                    // check end game
+                                  } else {
+                                    Future.delayed(
+                                        const Duration(milliseconds: 300),
+                                        () {
+                                      setState(() {
+                                        game.gameImg![game.matchCheck[0].keys
+                                            .first] = game.hiddenCardpath;
+                                        game.gameImg![game.matchCheck[1].keys
+                                            .first] = game.hiddenCardpath;
+                                        game.matchCheck.clear();
+                                      });
+                                    });
+                                  }
+                                }
+                              }
+                            : () {
                                 showDialog<void>(
                                   context: context,
                                   barrierDismissible:
                                       true, // user must tap button!
                                   builder: (BuildContext context) {
+                                    thuchiencapnhatdiem();
                                     return AlertDialog(
                                       title: const Text('Thông báo'),
                                       content: SingleChildScrollView(
                                         child: ListBody(
-                                          children: <Widget>[
+                                          children: const <Widget>[
                                             Text(
-                                                'Bạn được cộng $score điểm vào điểm tích luỹ!'),
+                                                'Bạn đã hết lượt hãy mua thêm lượt mới!'),
                                           ],
                                         ),
                                       ),
                                     );
                                   },
                                 );
-                                thuchiencapnhatdiem();
-                              }
-                              // check end game
-                            } else {
-                              Future.delayed(const Duration(milliseconds: 300),
-                                  () {
-                                setState(() {
-                                  game.gameImg![game.matchCheck[0].keys.first] =
-                                      game.hiddenCardpath;
-                                  game.gameImg![game.matchCheck[1].keys.first] =
-                                      game.hiddenCardpath;
-                                  game.matchCheck.clear();
-                                });
-                              });
-                            }
-                          }
-                        },
+                              },
                         child: Container(
                           width: 50,
                           decoration: BoxDecoration(

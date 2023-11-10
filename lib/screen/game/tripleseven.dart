@@ -213,13 +213,16 @@ class _TripleSevenState extends State<TripleSeven> {
                         color: Colors.blue,
                         border: Border.all(color: Colors.white, width: 5),
                       ),
-                      width: 150,
+                      width: 180,
                       height: 50,
                       child: Center(
                         child: Text(
                           "Điểm tích luỹ: $diem",
                           style: const TextStyle(
-                              fontSize: 13, color: Colors.white),
+                            fontSize: 13,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -236,14 +239,17 @@ class _TripleSevenState extends State<TripleSeven> {
                         child: Text(
                           "Lượt: $luot",
                           style: const TextStyle(
-                              fontSize: 13, color: Colors.white),
+                            fontSize: 13,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                   ]),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 90.0, right: 20.0),
+              padding: const EdgeInsets.only(left: 115.0, right: 20.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
