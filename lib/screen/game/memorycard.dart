@@ -1,7 +1,10 @@
+import 'package:flip_card/flip_card_controller.dart';
+
 class MemoryCard {
   final String hiddenCardpath = 'assets/memorycard/image_cover.jpg';
 
   List<String>? gameImg;
+  List<FlipCardController>? controller;
 
   final cardCount = 12;
 
@@ -25,5 +28,6 @@ class MemoryCard {
   void initGame() {
     cards_list.shuffle();
     gameImg = List.generate(cardCount, (index) => hiddenCardpath);
+    controller = List.generate(cardCount, (index) => FlipCardController());
   }
 }
