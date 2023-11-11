@@ -383,8 +383,8 @@ class _MemoryCardPage2State extends State<MemoryCardPage2> {
                           ),
                         ),
                         back: GestureDetector(
-                          onTap: () {
-                            game.controller![index].toggleCard();
+                          onTap: () async {
+                            await game.controller![index].toggleCard();
                           },
                           child: Container(
                             decoration: BoxDecoration(
