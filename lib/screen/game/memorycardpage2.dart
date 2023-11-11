@@ -392,7 +392,7 @@ class _MemoryCardPage2State extends State<MemoryCardPage2> {
                                     const BorderRadius.all(Radius.circular(10)),
                                 color: Colors.white,
                                 image: DecorationImage(
-                                    image: AssetImage(game.cards_list![index]),
+                                    image: AssetImage(game.cards_list[index]),
                                     fit: BoxFit.cover)),
                           ),
                         ),
