@@ -101,7 +101,7 @@ class _LotteryTicketState extends State<LotteryTicket> {
         },
       ),
       debugShowCheckedModeBanner: false,
-      title: "Ô Số bí ẩn",
+      title: "Ô số bí ẩn",
       theme: ThemeData(
           scaffoldBackgroundColor: const Color.fromARGB(255, 224, 224, 233),
           appBarTheme: const AppBarTheme(
@@ -109,7 +109,7 @@ class _LotteryTicketState extends State<LotteryTicket> {
           )),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Ô nhớ"),
+          title: const Text("Ô số bí ẩn"),
           leading: InkWell(
             onTap: () {
               Navigator.pop(context);
