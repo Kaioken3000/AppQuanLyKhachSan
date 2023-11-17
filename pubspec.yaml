@@ -48,6 +48,7 @@ dependencies:
   flutter_spinning_wheel: ^1.1.0
   flip_card: ^0.7.0
   panorama: ^0.4.1
+  scratcher: ^2.3.0
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,7 @@ flutter:
   - assets/
   - assets/memorycard/
   - assets/slotgame/
+  - assets/lottery/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

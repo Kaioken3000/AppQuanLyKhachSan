@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'lotteryticket.dart';
 import 'memorycardpage.dart';
 import 'memorycardpage2.dart';
 import 'spinningwheel.dart';
@@ -119,6 +120,39 @@ class GameList extends StatelessWidget {
                       child: Center(
                           child: Text(
                         "Ô nhớ",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      )),
+                    ),
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LotteryTicket()),
+                  );
+                },
+                child: Column(
+                  children: [
+                    Container(
+                      height: 175,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        image: DecorationImage(
+                          image: AssetImage("assets/lottery/dollar.png"),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      padding: const EdgeInsets.all(8),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                          child: Text(
+                        "Ô số bí ẩn",
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       )),
